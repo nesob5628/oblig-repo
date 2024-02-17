@@ -9,6 +9,13 @@
 <body>
     <h1>Kinobillettregistrering</h1>
     <form id="ticketForm">
+        <select id = "film" placeholder = "Velg film her" onchange="velg();">
+            <option>Velg film</option>
+            <option>Cinderella</option>
+            <option>Tangled</option>
+            <option>Belle</option>
+        </select> <br>
+        
         <label for="tickets">Antall billetter:</label>
         <input type="number" id="tickets" pattern="[0-9]" required><br>
 

@@ -1,82 +1,84 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('ticketForm');
-    const ticketList = document.getElementById('ticketList');
-    const deleteAllButton = document.getElementById('deleteAll');
+    let skjema = document.getElementById('ticketForm');
+    let billettListe = document.getElementById('ticketList');
+    let slettAlleKnapp = document.getElementById('deleteAll');
 
-    const tickets = [];
+    let billetter = [];
 
-    form.addEventListener('submit', function(event) {
+    skjema.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Retrieve form values
-        const numberOfTickets = document.getElementById('tickets').value;
-        const firstname = document.getElementById('firstname').value;
-        const surname = document.getElementById('surname').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
+        // Hent verdier fra skjemaet
+        let film = document.getElementById('film').value;
+        let antallBilletter = document.getElementById('tickets').value;
+        let fornavn = document.getElementById('firstname').value;
+        let etternavn = document.getElementById('surname').value;
+        let epost = document.getElementById('email').value;
+        let telefon = document.getElementById('phone').value;
 
-        // Perform input validation
-        if (!numberOfTickets.trim() || isNaN(numberOfTickets) || numberOfTickets < 1 || numberOfTickets > 10) {
+        // utfører validering av skjemaet og gir feilmelding om noe er feil
+        if (!antallBilletter.trim() || isNaN(antallBilletter) || antallBilletter < 1 || antallBilletter > 10) {
             alert('Vennligst skriv inn et gyldig antall billetter (1-10).');
             return;
         }
 
-        if (!firstname.trim()) {
+        if (!fornavn.trim()) {
             alert('Vennligst skriv inn fornavnet ditt.');
             return;
         }
 
-        if (!surname.trim()) {
+        if (!etternavn.trim()) {
             alert('Vennligst skriv inn etternavnet ditt.');
             return;
         }
 
-        if (!email.trim()) {
+        if (!epost.trim()) {
             alert('Vennligst skriv inn en gyldig e-postadresse.');
             return;
         }
 
-        if (!phone.trim() || phone.length !== 8 || isNaN(phone)) {
+        if (!telefon.trim() || telefon.length !== 8 || isNaN(telefon)) {
             alert('Vennligst skriv inn et gyldig telefonnummer (8 sifre).');
             return;
         }
 
-        // Create ticket object
-        const ticket = {
-            numberOfTickets: numberOfTickets,
-            firstname: firstname,
-            surname: surname,
-            email: email,
-            phone: phone
-            // Add other properties here
+        // Oppretter en billettliste
+        let billett = {
+            film: film,
+            antallBilletter: antallBilletter,
+            fornavn: fornavn,
+            etternavn: etternavn,
+            epost: epost,
+            telefon: telefon
+            // Legg til andre egenskaper her om nødvendig
         };
 
-        // Add ticket to the array
-        tickets.push(ticket);
+        // Legg til billetten i arrayet
+        billetter.push(billett);
 
-        // Clear form fields
-        form.reset();
+        // Tømmer skjemaet
+        skjema.reset();
 
-        // Render tickets
-        renderTickets();
+        // Oppdater visningen av billetter
+        visBilletter();
     });
 
-    deleteAllButton.addEventListener('click', function() {
-        // Clear all tickets
-        tickets.length = 0;
-        renderTickets();
+    slettAlleKnapp.addEventListener('click', function() {
+        // Tøm alle billetter
+        billetter.length = 0;
+        visBilletter();
     });
 
-    function renderTickets() {
-        // Clear existing list
-        ticketList.innerHTML = '';
+    function visBilletter() {
+        // Fjerner eksisterende liste
+        billettListe.innerHTML = '';
 
-        // Render each ticket
-        tickets.forEach(function(ticket, index) {
-            const li = document.createElement('li');
-            li.textContent = `Antall: ${ticket.numberOfTickets}, Fornavn: ${ticket.firstname}, Etternavn: ${ticket.surname}, E-post: ${ticket.email}, Telefon: ${ticket.phone}`;
-            // Append other ticket details as needed
-            ticketList.appendChild(li);
+        // Vis hver billett
+        billetter.forEach(function(billett, indeks) {
+            let li = document.createElement('li');
+            li.textContent = `Film: ${billett.film},  Antall: ${billett.antallBilletter},  Fornavn: ${billett.fornavn},  Etternavn: ${billett.etternavn},  E-post: ${billett.epost},  Telefon: ${billett.telefon}`;
+            // Informasjonen om valgte billetter kommer ut
+            billettListe.appendChild(li);
         });
     }
 });
